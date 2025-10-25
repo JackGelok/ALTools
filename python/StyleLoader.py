@@ -10,7 +10,6 @@ def style(name, baseDir=None):
     if stylePath.exists():
         with open(stylePath) as file:
             data = file.read()
-            #return file.read
             file.close()
         return data
     
