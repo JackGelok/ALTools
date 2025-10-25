@@ -1,0 +1,7 @@
+{
+    "env": [
+        {
+            "PYTHONPATH": "$HOUDINI_USER_PREF_DIR/ALTools/python"
+        }
+    ]
+}
