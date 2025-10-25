@@ -12,11 +12,12 @@ class quickProjectLogic:
         self.jsonPath = Path(f"{hou.getenv('HOUDINI_USER_PREF_DIR')}/ALTools/Projects.json")
         self.jsonPath.parent.mkdir(parents=True, exist_ok=True) # make sure ALTools folder exists
         self.textPath = "E:/Projects"
-        #self.startup()
+        self.startup()
 
     def startup(self):
         if self.checkJsonExists():
             print("Json Dosnt exist")
+            self.checkJsonExists()
         else:
             print("Json Exists")
 
@@ -38,13 +39,30 @@ class quickProjectLogic:
 
     def saveHipFile(self, project, file, version):
         # === get File Path === #
-        filePath = Path(f"{self.textPath}/{project}/{project}_{file}_v{version}.hip")
-        filePath.parent.mkdir(parents=True, exist_ok=True)
+        self.filePath = Path(f"{self.textPath}/{project}/{project}_{file}_v{version}.hip")
+        self.filePath.parent.mkdir(parents=True, exist_ok=True)
 
         # === save file === #
-        self.save = hou.hipFile.save(str(filePath),True)
-        print(f"Saved File At: {filePath}")
+        self.save = hou.hipFile.save(str(self.filePath),True)
+        print(f"Saved File At: {self.filePath}")
+    
+    def updateJsonSettings(self, setting, value):
+        if value == "":
+            print("value was blank")
+            return
 
+        else:
+            with open(self.jsonPath, "r") as file:
+                data = json.load(file)
+
+            data["settings"][str(setting)] = value
+
+            with open(self.jsonPath, "w") as file:
+                json.dump(data, file, indent=4)
+
+
+
+        
 
 class settingsPannel(QtWidgets.QDialog):
     authorChanged = QtCore.Signal(str)
@@ -79,6 +97,7 @@ class settingsPannel(QtWidgets.QDialog):
         icon = hou.ui.createQtIcon("BUTTONS_chooser_file")
         folderButton.setIcon(icon)
         folderButton.setStyleSheet(folderButtonStyle)
+        folderButton.clicked.connect(self.chooseProjectFolder)
 
         self.projectFolder = QtWidgets.QLineEdit()
         self.projectFolder.setStyleSheet(textStyle)
@@ -121,6 +140,16 @@ class settingsPannel(QtWidgets.QDialog):
     def cancelClicked(self):
         self.close()
 
+    def chooseProjectFolder(self):
+        # Open Houdini's native folder chooser
+        folder_path = hou.ui.selectFile(
+            title="Select Project Folder",
+            file_type=hou.fileType.Directory,
+            chooser_mode=hou.fileChooserMode.Read
+        )
+        
+        if folder_path:
+            self.projectFolder.setText(folder_path)
 
 class quickProjectUi(QtWidgets.QDialog):
     def __init__(self):
@@ -258,14 +287,14 @@ class quickProjectUi(QtWidgets.QDialog):
     def connector(self):
         self.save.clicked.connect(self.saveClicked)
         self.saveAs.clicked.connect(self.saveAsClicked)
-        self.settingsCog.clicked.connect(self.openSettings)
+        self.settingsCog.clicked.connect(self.settingsDiag)
 
 
     def saveClicked(self):
         self.logic.checkJsonExists()
         project = "project"
         file = "file"
-        version = 1
+        version = 2
         self.logic.saveHipFile(project, file, f"{version:03}")
 
 
@@ -273,22 +302,25 @@ class quickProjectUi(QtWidgets.QDialog):
         print("not ready, prob gonna change to load")
         
 
-    def openSettings(sett):
+    def settingsDiag(self):
         settings = settingsPannel()
-        sett.author = "" # this var stores the output of the author feild in the settings pannel
-        sett.filePath = Path("") #this var stores the output of the projects path of the settings pannel
+        self.authorUser = "" # this var stores the output of the author feild in the settings pannel
+        self.filePathUser = "" #this var stores the output of the projects path of the settings pannel
 
         def storeAuthor(authorText):
-            sett.author = authorText
+            self.authorUser = authorText
 
         def storeFilePath(filePathText):
-            sett.filePath = filePathText
+            self.filePathUser = filePathText
         
         settings.authorChanged.connect(storeAuthor)
         settings.filePathChanged.connect(storeFilePath)
-        settings.exec_()
-        print(f"changed author to: {sett.author}") # test print
-        print(f"changed file path to: {sett.filePath}") # test print
+        settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("author",self.authorUser))
+        settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("homeFolder", self.filePathUser))
+        settings.show()
+
+        #self.logic.updateJsonSettings("author",self.authorUser)
+        #self.logic.updateJsonSettings("homeFolder", self.filePathUser)
 
 def onCreateInterface():
     return quickProjectUi()

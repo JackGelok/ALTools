@@ -1,6 +1,6 @@
 <menuDocument>
     <menu>
-        <actionItem id="pythonpanel::quickProjectPannel">
+        <actionItem id="pythonpanel::ALTools_quickProject">
             <label>Quick Project</label>
         </actionItem>
     </menu>
