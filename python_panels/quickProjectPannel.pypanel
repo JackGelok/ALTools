@@ -5,18 +5,14 @@
  used by the application.  Note, that two definitions of the
  same interface or of the interfaces menu are not allowed
  in a single file. -->
-  <interface name="quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg" showNetworkNavigationBar="false" help_url="">
-    <script><![CDATA[
+  <interface name="ALTools_quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg" showNetworkNavigationBar="false" help_url="">
+    <script><![CDATA[import importlib
 import quickProject
-import importlib
 
 importlib.reload(quickProject)
 
-
 def onCreateInterface():
-    return quickProject.quickProjectUi()
-]]></script>
-    <includeInToolbarMenu menu_position="209" create_separator="false"/>
+    return quickProject.quickProjectUi()]]></script>
     <help><![CDATA[]]></help>
   </interface>
 </pythonPanelDocument>

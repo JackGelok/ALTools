@@ -3,7 +3,7 @@
 import hou
 import json
 import os
-from hutil.PySide import QtWidgets, QtCore, QtGui
+from PySide6 import QtWidgets, QtCore, QtGui
 from pathlib import Path
 from StyleLoader import style
 
@@ -12,10 +12,10 @@ class quickProjectLogic:
         self.jsonPath = Path(f"{hou.getenv('HOUDINI_USER_PREF_DIR')}/ALTools/Projects.json")
         self.jsonPath.parent.mkdir(parents=True, exist_ok=True) # make sure ALTools folder exists
         self.textPath = "E:/Projects"
-        self.startup()
+        #self.startup()
 
     def startup(self):
-        if not self.checkJsonExists():
+        if self.checkJsonExists():
             print("Json Dosnt exist")
         else:
             print("Json Exists")
@@ -103,7 +103,7 @@ class settingsPannel(QtWidgets.QDialog):
     
 
         textEditLayout.addWidget(self.author)
-        textEditLayout.addLayout    (self.projectFolderlayout)
+        textEditLayout.addLayout(self.projectFolderlayout)
 
         buttonLayout.addWidget(self.saveButton)
         buttonLayout.addWidget(self.cancelButton)

@@ -1,0 +1,7 @@
+<menuDocument>
+    <menu>
+        <actionItem id="pythonpanel::quickProjectPannel">
+            <label>Quick Project</label>
+        </actionItem>
+    </menu>
+</menuDocument>
