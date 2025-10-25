@@ -1,0 +1,173 @@
+/* ############### scroll Area ############### */
+    QScrollArea {
+        background-color: #1e1e1e;
+        border: 1px solid #3c3c3c;
+        margin: 20px 2px 20px 2px;
+
+        border-radius: 8px;
+    }
+
+    /* === Vertical Scrollbar === */
+    QScrollBar:vertical {
+        background-color: #242424;
+        width: 24px;
+        margin: 2px 2px 2px 2px;
+        border-radius: 9px;
+    }
+
+    /* --- The Handle (draggable part) --- */
+    QScrollBar::handle:vertical {
+        min-height: 25px;
+        margin: 2px;
+        border-radius: 7px;
+        border: 1px solid #444;
+        background: qlineargradient(
+            x1: 0, y1: 0,
+            x2: 0.2, y2: 1,
+            stop: 0.1 #C8006E,
+            stop: 0.5 #FA8B5A,
+            stop: 1 #E5C562
+        );
+    }
+
+    QScrollBar::handle:vertical:hover {
+        background-color: #6a6a6a;
+    }
+
+    
+    QScrollBar::add-line:vertical {
+    background: none;
+    border: 0px;
+    height: 0px;
+    }
+
+    QScrollBar::sub-line:vertical {
+    background: none;
+    border: 0px;
+    height: 0px;
+    }
+
+    /* === Horizontal Scrollbar === */
+    QScrollBar:horizontal {
+        background-color: #242424;
+        height: 12px;
+        margin: 4px;
+        border-radius: 6px;
+    }
+
+    QScrollBar::handle:horizontal {
+        background-color: #505050;
+        border-radius: 6px;
+        min-width: 25px;
+        margin: 2px;
+    }
+
+    QScrollBar::handle:horizontal:hover {
+        background-color: #6a6a6a;
+    }
+
+    QScrollBar::add-line:horizontal,
+    QScrollBar::sub-line:horizontal {
+        width: 0;
+        background: none;
+    }
+
+    QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical  
+    {  
+        border: none;  
+        background: none;  
+        color: none;  
+    }
+
+/* ############### Widget Area ############### */
+    QTreeWidget {
+        background-color: #1e1e1e;
+        border: 1px solid #z;
+        border-radius: 8px;
+        alternate-background-color: #242424;
+        color: #d0d0d0;
+        
+    }
+
+    QTreeWidget::item {
+        height: 22px;
+        padding: 3px 6px;
+        margin: 2px 0px 2px 0px;
+    }
+
+    QTreeWidget::item:first {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        margin: 2px 0px 2px 2px;
+    }
+
+    QTreeWidget::item:last{
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    
+    QTreeWidget::item:hover {
+        background-color: #2b2b2b;
+    }
+
+    QTreeWidget::item:selected {
+        background-color: qlineargradient(
+            x1: 0, y1: 0,
+            x2: 0, y2: 1,
+            stop: 0.1 #344e4e4e,
+            stop: 1 #348d8d8d
+        );
+        color: white;
+    }
+
+    QTreeWidget::item:open{
+        background-color: #252525;
+        border-bottom-left-radius: 0px;
+    }
+
+    QTreeWidget::branch:has-siblings:!adjoins-item {
+        border-image: url(:/qtreeview/branch-line.png) 0;
+    }
+
+    QHeaderView::section {
+        background-color: #252525;
+        color: #aaaaaa;
+        padding: 4px;
+        border: 0px solid #333;
+        font-weight: bold;
+        border-radius: 8px;
+        margin: 1px;
+        
+
+    }
+
+
+    /* Rounded corners for the first and last sections */
+    QHeaderView {
+        background-color: #252525;
+        alternate-background-color: #252525;
+        border-radius: 8px;
+    }
+/*### the liney bits ###*/
+QTreeView::branch{
+    background:#1e1e1e;
+}
+QTreeView::branch:has-siblings:!adjoins-item,
+QTreeView::branch:has-siblings:adjoins-item,
+QTreeView::branch:!has-children:!has-siblings:adjoins-item,
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings,
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
+    border-image: none;
+}
+
+QTreeView::branch:!has-children:!has-siblings:adjoins-item,
+QTreeView::branch:has-siblings:adjoins-item{
+    background: #252525;
+    margin: -2px 0px 0px 2px;
+}
+QTreeView::branch:!has-children:!has-siblings:adjoins-item{
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
