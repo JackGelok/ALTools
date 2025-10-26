@@ -1,12 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <pythonPanelDocument>
-<interface name="ALTools_quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg">
-<script><![CDATA[import importlib
+  <!-- This file contains definitions of Python interfaces and the
+ interfaces menu.  It should not be hand-edited when it is being
+ used by the application.  Note, that two definitions of the
+ same interface or of the interfaces menu are not allowed
+ in a single file. -->
+  <interface name="ALTools_quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg" showNetworkNavigationBar="false" help_url="">
+    <script><![CDATA[import importlib
 import quickProject
+
 
 importlib.reload(quickProject)
 
 def onCreateInterface():
     return quickProject.quickProjectUi()
 ]]></script>
-</interface>
+    <help><![CDATA[]]></help>
+  </interface>
 </pythonPanelDocument>

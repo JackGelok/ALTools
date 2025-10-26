@@ -1,3 +1,8 @@
+#### this is a old backup file, rename to .py to get functioning again ###
+
+
+
+
 #from PySide2 import QtWidgets, QtCore, QtGui
 
 import hou
@@ -36,11 +41,18 @@ class quickProjectLogic:
                     json.dump(structure, file, indent=4)
                     print(f"Created new JSON file at: {self.jsonPath}")
 
-
     def saveHipFile(self, project, file, version):
         # === get File Path === #
         self.filePath = Path(f"{self.textPath}/{project}/{project}_{file}_v{version}.hip")
         self.filePath.parent.mkdir(parents=True, exist_ok=True)
+
+        # === check for inputs === #
+        if not project:
+            hou.ui.displayMessage("No Project Was Given",buttons=("Ok",), severity=hou.severityType.Warning)
+            return
+        if not file:
+            hou.ui.displayMessage("No File Name Was Given",buttons=("Ok",), severity=hou.severityType.Warning)
+            return
 
         # === save file === #
         self.save = hou.hipFile.save(str(self.filePath),True)
@@ -61,8 +73,6 @@ class quickProjectLogic:
                 json.dump(data, file, indent=4)
 
 
-
-        
 
 class settingsPannel(QtWidgets.QDialog):
     authorChanged = QtCore.Signal(str)
@@ -150,6 +160,8 @@ class settingsPannel(QtWidgets.QDialog):
         
         if folder_path:
             self.projectFolder.setText(folder_path)
+
+
 
 class quickProjectUi(QtWidgets.QDialog):
     def __init__(self):
@@ -291,8 +303,7 @@ class quickProjectUi(QtWidgets.QDialog):
 
 
     def saveClicked(self):
-        self.logic.checkJsonExists()
-        project = "project"
+        project = "Project"
         file = "file"
         version = 2
         self.logic.saveHipFile(project, file, f"{version:03}")
@@ -318,9 +329,6 @@ class quickProjectUi(QtWidgets.QDialog):
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("author",self.authorUser))
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("homeFolder", self.filePathUser))
         settings.show()
-
-        #self.logic.updateJsonSettings("author",self.authorUser)
-        #self.logic.updateJsonSettings("homeFolder", self.filePathUser)
 
 def onCreateInterface():
     return quickProjectUi()
