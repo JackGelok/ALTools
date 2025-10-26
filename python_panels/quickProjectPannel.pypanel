@@ -7,13 +7,13 @@
  in a single file. -->
   <interface name="ALTools_quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg" showNetworkNavigationBar="false" help_url="">
     <script><![CDATA[import importlib
-import quickProject
+from quickProject import Ui
 
 
-importlib.reload(quickProject)
+importlib.reload(Ui)
 
 def onCreateInterface():
-    return quickProject.quickProjectUi()
+    return Ui.quickProjectUi()
 ]]></script>
     <help><![CDATA[]]></help>
   </interface>

@@ -2,8 +2,8 @@ import hou
 from PySide6 import QtWidgets, QtCore, QtGui
 from pathlib import Path
 from StyleLoader import style
-from settingsPannel import settingsPannel
-from logic import quickProjectLogic
+from .settingsPannel import settingsPannel
+from .logic import quickProjectLogic
 
 class quickProjectUi(QtWidgets.QDialog):
     def __init__(self):
