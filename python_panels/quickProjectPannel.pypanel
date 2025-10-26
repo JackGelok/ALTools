@@ -8,9 +8,13 @@
   <interface name="ALTools_quickProject" label="Quick Project" icon="hicon:/SVGIcons.index?DESKTOP_hip.svg" showNetworkNavigationBar="false" help_url="">
     <script><![CDATA[import importlib
 from quickProject import Ui
+from quickProject import logic
+from quickProject import settingsPannel
 
 
 importlib.reload(Ui)
+importlib.reload(logic)
+importlib.reload(settingsPannel)
 
 def onCreateInterface():
     return Ui.quickProjectUi()

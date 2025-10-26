@@ -2,6 +2,7 @@ import hou
 import json
 from pathlib import Path
 import os
+from quickProject import settingsPannel
 
 
 
@@ -16,8 +17,10 @@ class quickProjectLogic:
         if self.checkJsonExists():
             print("Json Dosnt exist")
             self.checkJsonExists()
+            settings = settingsPannel()
+            settings.show()
         else:
-            print("Json Exists")
+            pass
 
     def checkJsonExists(self):
         if not os.path.exists(self.jsonPath):
@@ -26,8 +29,7 @@ class quickProjectLogic:
                         "author": "",
                         "homeFolder": "",
                         "Style": "Default"
-                    },
-                    "Projects": {}
+                    }
                 }
                 
                 with open(self.jsonPath, 'w') as file:  
