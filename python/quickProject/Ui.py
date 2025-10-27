@@ -5,6 +5,8 @@ from StyleLoader import style
 from .settingsPannel import settingsPannel
 from .logic import quickProjectLogic
 
+
+
 class quickProjectUi(QtWidgets.QDialog):
     def __init__(self):
         super().__init__(hou.qt.mainWindow())

@@ -1,7 +1,13 @@
 <menuDocument>
     <menu>
+    
+        <separatorItem/>
+
         <actionItem id="pythonpanel::ALTools_quickProject">
             <label>Quick Project</label>
         </actionItem>
+
+        <separatorItem/>
+
     </menu>
 </menuDocument>

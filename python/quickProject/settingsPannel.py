@@ -80,7 +80,6 @@ class settingsPannel(QtWidgets.QDialog):
         self.close()
 
     def chooseProjectFolder(self):
-        # Open Houdini's native folder chooser
         folder_path = hou.ui.selectFile(
             title="Select Project Folder",
             file_type=hou.fileType.Directory,
