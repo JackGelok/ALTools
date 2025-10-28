@@ -7,6 +7,7 @@
 
   <toolshelf name="ALTools" label="ATLoools">
     <memberTool name="quickNodeColour"/>
+    <memberTool name="tool_2"/>
   </toolshelf>
 
   <tool name="quickNodeColour" label="Custom Node Colour" icon="hicon:/SVGIcons.index?BUTTONS_chooser_color.svg">
