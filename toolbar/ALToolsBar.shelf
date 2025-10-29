@@ -7,7 +7,8 @@
 
   <toolshelf name="ALTools" label="ATLoools">
     <memberTool name="quickNodeColour"/>
-    <memberTool name="tool_2"/>
+    <memberTool name="princeToMTLX"/>
+    <memberTool name="testingTool"/>
   </toolshelf>
 
   <tool name="quickNodeColour" label="Custom Node Colour" icon="hicon:/SVGIcons.index?BUTTONS_chooser_color.svg">
@@ -26,14 +27,31 @@
       <contextNetType>COP</contextNetType>
     </toolMenuContext>
     <toolSubmenu>ALTools</toolSubmenu>
-    <script scriptType="python"><![CDATA[import hou
+    <script scriptType="python"><![CDATA[import CustomNodeColour
+import importlib
 
-color = hou.ui.selectColor(initial_color=hou.Color((1.0, 1.0, 1.0)))
+importlib.reload(CustomNodeColour)
 
-if color is not None:
-    for node in hou.selectedNodes():
-        node.setColor(color)
-else:
-    pass]]></script>
+CustomNodeColour.setNodeColour()]]></script>
+  </tool>
+
+  <tool name="princeToMTLX" label="Shader Converter MTLX" icon="hicon:/SVGIcons.index?COMMON_houdinimaterialx.svg">
+    <toolMenuContext name="network">
+      <contextNetType>SHOP</contextNetType>
+      <contextNetType>VOP</contextNetType>
+      <contextNetType>VOPNET</contextNetType>
+      <contextNetType>LOP</contextNetType>
+    </toolMenuContext>
+    <script scriptType="python"><![CDATA[import PrincipleToMTLX
+
+PrincipleToMTLX.converter.materialconverterMTLX()]]></script>
+  </tool>
+
+  <tool name="testingTool" label="Testing Tool" icon="hicon:/SVGIcons.index?MISC_experimental.svg">
+    <script scriptType="python"><![CDATA[from quickProject import logic
+import importlib
+importlib.reload(logic)
+test = logic.quickProjectLogic()
+test.saveProjectJson("test2","file")]]></script>
   </tool>
 </shelfDocument>

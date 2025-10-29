@@ -50,7 +50,7 @@ class quickProjectUi(QtWidgets.QDialog):
         self.settingsCog.setStyleSheet(settingsStyle)
         title = QtWidgets.QLabel("Quick Project")
         title.setStyleSheet(titleStyle)
-        
+
         #Layout
         self.menuBarLayout = QtWidgets.QHBoxLayout()
         self.menuBarLayout.addWidget(title)
@@ -95,7 +95,7 @@ class quickProjectUi(QtWidgets.QDialog):
         version = 0
         self.version = QtWidgets.QLabel(f"v{version:03}")
         self.version.setStyleSheet(versionStyle)
-    
+
     def saveBarLayout(self):
         self.saveBar = QtWidgets.QHBoxLayout()
         self.saveBar.addWidget(self.projectName)
@@ -147,9 +147,20 @@ class quickProjectUi(QtWidgets.QDialog):
 
 
     def saveClicked(self):
-        project = "Project"
+
+        ############## temp stuff ############
+        import json
+        project = "test3"
         file = "file"
-        version = 2
+        jsonPath = Path(f"{hou.getenv('HOUDINI_USER_PREF_DIR')}/ALTools/Projects.json")
+        with open(jsonPath, "r") as settFile:
+            userdata = json.load(settFile)
+            homeDir = Path(userdata["settings"]["homeDir"])
+            jsonDir = homeDir / project / f"{project}_Project.json"
+        ######################################
+    
+        self.logic.saveProjectJson(project, "file")
+        version = self.logic.loadProjectJson(jsonDir,"version")
         self.logic.saveHipFile(project, file, f"{version:03}")
 
 
@@ -167,7 +178,7 @@ class quickProjectUi(QtWidgets.QDialog):
 
         def storeFilePath(filePathText):
             self.filePathUser = filePathText
-        
+
         settings.authorChanged.connect(storeAuthor)
         settings.filePathChanged.connect(storeFilePath)
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("author",self.authorUser))
