@@ -68,6 +68,57 @@ class quickProjectLogic:
                 json.dump(data, file, indent=4)
 
 
+
+    def initProjectJson(self, project):
+        """
+        Initialize a new project JSON file for tracking project metadata.
+        
+        Args:
+            project (str): The name of the project to initialize
+            
+        This function:
+        1. Gets the current timestamp for project creation date
+        2. Reads user settings from the main settings JSON file
+        3. Creates a new project-specific JSON file if it doesn't exist
+        4. Sets up initial project metadata including author and creation date
+        """
+        # Get current timestamp for project creation date
+        from datetime import datetime
+        now = datetime.now()
+        nowFormatted = now.strftime("%d-%m-%Y %H:%M:%S")
+
+        # Read user settings from main settings file
+        with open(self.jsonPath, "r") as settFile:
+            userdata = json.load(settFile)
+            author = userdata["settings"]["author"]  # Get author from settings
+            homeDir = Path(userdata["settings"]["homeDir"])  # Get project home directory
+            jsonDir = homeDir / project / f"{project}_Project.json"  # Construct project JSON path
+
+        # Create new project JSON file if it doesn't exist
+        if not jsonDir.exists():
+            # Define initial project structure
+            structure = {
+                "ProjectData": {
+                    "project": f"{project}",  # Project name
+                    "author": f"{author}",    # Project author
+                    "created": f"{nowFormatted}"  # Creation timestamp
+                    },
+                "Files": {  # Empty files section to be populated later
+                }
+                }
+            
+            # Create project directory if it doesn't exist
+            jsonDir.parent.mkdir(parents=True, exist_ok=True)
+            # Write initial project structure to JSON file
+            with open(jsonDir, "w") as file:
+                json.dump(structure, file, indent=4)
+        else:
+            pass  # If project JSON already exists, do nothing
+
+
+
+
+
     def saveProjectJson(self, project, filename):
         from datetime import datetime
         now = datetime.now()
@@ -132,3 +183,4 @@ class quickProjectLogic:
 
         print(data["ProjectData"][str(value)])
         return data["ProjectData"][str(value)]
+
