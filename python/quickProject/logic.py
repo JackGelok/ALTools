@@ -70,8 +70,6 @@ class quickProjectLogic:
             with open(self.jsonPath, "w") as file:
                 json.dump(data, file, indent=4)
 
-
-
     def initProjectJson(self, project):
         """
         Initialize a new project JSON file for tracking project metadata.
@@ -116,7 +114,6 @@ class quickProjectLogic:
             print(f"initProjectJson was skiped due to entry {project} already existing")
             pass  # If project JSON already exists, do nothing
 
-
     def addFileToJson(self, project, filename):
         with open(self.jsonPath, "r") as settFile:
             userdata = json.load(settFile)
@@ -143,8 +140,6 @@ class quickProjectLogic:
             print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
             pass
 
-
-
     def incProjectVersion(self, project, filename):
         """
         This function increments the version of the current file and updates the updated part to the current time
@@ -169,61 +164,9 @@ class quickProjectLogic:
                 vNum = int(version.lstrip("v"))
                 newV = vNum + 1
                 data["Files"][filename]["version"] = f"v{newV:03}"
-                data["Files"][filename]["modified"] = self.now
+                data["Files"][filename]["modified"] = f"{self.now}"
                 json.dump(data,file,indent=4)
                 print(f"{filename} was updated to v{newV:03}")
-
-
-
-    def saveProjectJson(self, project, filename):
-        from datetime import datetime
-        now = datetime.now()
-        nowFormatted = now.strftime("%d-%m-%Y %H:%M:%S")
-
-        with open(self.jsonPath, "r") as settFile:
-            userdata = json.load(settFile)
-            author = userdata["settings"]["author"]
-            homeDir = Path(userdata["settings"]["homeDir"])
-            jsonDir = homeDir / project / f"{project}_Project.json"
-
-        ### === sanity checks === ###
-            #== make sure feilds are filled ==#
-            if not project:
-                hou.ui.displayMessage("Project not specified!",severity=Warning)
-                return
-            if not filename:
-                hou.ui.displayMessage("File name not specified!",severity=Warning)
-                return
-            if not jsonDir.exists():
-                structure = {
-                    "ProjectData": {
-                        "project": f"{project}",
-                        "author": f"{author}",
-                        "version": f"v{0:03}",
-                        "created": f"{nowFormatted}"
-                        },
-                    "Files":{
-                    }
-                    }
-                jsonDir.parent.mkdir(parents=True, exist_ok=True)
-                with open(jsonDir, "w") as file:
-                    json.dump(structure, file, indent=4)
-
-
-
-        ### === increment version === ###
-        with open(jsonDir,"r") as projFileRead:
-            data = json.load(projFileRead)
-            version = data["ProjectData"]["version"]
-
-        with open(jsonDir, "w") as projFileWrite:
-            version_num = int(version.lstrip("v"))
-            newVersion = version_num + 1
-            data["ProjectData"]["version"] = f"v{newVersion:03}"
-            json.dump(data, projFileWrite, indent=4)
-            print(f"{filename} version was updated to v{newVersion:03}")
-############################## need to work out kinks in file versioning ###########################
-
 
     def loadSettingsJson(self, setting):
         with open(self.jsonPath, "r") as file:
@@ -233,10 +176,52 @@ class quickProjectLogic:
         return data["settings"][str(setting)]
 
 
-    def loadProjectJson(self, projectpath ,value):
-        with open(projectpath, "r") as file:
-            data = json.load(file)
+    def loadProjectJson(self, projectpath , keys):
+        """
+        Load and return a value from a project JSON file.
 
-        print(data["ProjectData"][str(value)])
-        return data["ProjectData"][str(value)]
+        Accepts either a single key (string) or an iterable of keys to traverse
+        nested dictionaries. Example usage:
 
+            loadProjectJson(path, 'version')
+            loadProjectJson(path, ('Files', 'myfile', 'version'))
+
+        Args:
+            projectpath (str | Path): Path to the project JSON file.
+            keys (str | Iterable[str]): Key or sequence of keys to traverse.
+
+        Returns:
+            The requested value if found, otherwise None.
+        """
+
+        projectpath = Path(projectpath)
+
+        # Ensure the project file exists
+        if not projectpath.exists():
+            hou.ui.displayMessage(f"Project file not found: {projectpath}", buttons=("Ok",), severity=hou.severityType.Warning)
+            return None
+
+        # Load JSON from file with basic error handling
+        try:
+            with open(projectpath, "r") as file:
+                data = json.load(file)
+        except Exception as e:
+            hou.ui.displayMessage(f"Failed to read project file: {e}", buttons=("Ok",), severity=hou.severityType.Warning)
+            return None
+
+        # Normalize keys to a tuple to allow uniform traversal
+        if isinstance(keys, str):
+            keys = (keys,)
+
+        # Traverse nested dictionaries following the provided keys
+        current = data
+        for key in keys:
+            if isinstance(current, dict) and key in current:
+                current = current[key]
+            else:
+                hou.ui.displayMessage(f"Key '{key}' not found while traversing {projectpath}", buttons=("Ok",), severity=hou.severityType.Warning)
+                return None
+
+        # Print the result for visibility and return it
+        print(f"got value {current}")
+        return current
