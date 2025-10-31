@@ -111,6 +111,7 @@ class quickProjectLogic:
             # Write initial project structure to JSON file
             with open(jsonDir, "w") as file:
                 json.dump(structure, file, indent=4)
+            print(f"{project} was initilized at {homeDir}/{project}")
         else:
             print(f"initProjectJson was skiped due to entry {project} already existing")
             pass  # If project JSON already exists, do nothing
@@ -136,13 +137,40 @@ class quickProjectLogic:
 
             with open(jsonDir,"w") as file:
                 json.dump(data, file, indent=4)
+            print(f"{filename} was initialized in {project} at {homeDir}/{project}")
 
         else:
             print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
             pass
 
 
-        def incProjectVersion(self, project, filename):
+
+    def incProjectVersion(self, project, filename):
+        """
+        This function increments the version of the current file and updates the updated part to the current time
+        """
+
+        with open(self.jsonPath, "r") as settFile:
+            userdata = json.load(settFile)
+            author = userdata["settings"]["author"]
+            homeDir = Path(userdata["settings"]["homeDir"])
+            jsonDir = homeDir / project / f"{project}_Project.json"
+        
+        with open(jsonDir,"r") as file:
+            data = json.load(file)
+            
+
+        if filename not in data.get("Files",{}):
+            print(f"{filename}, was not found in {project}")
+            return
+        else:
+            with open(jsonDir,"w") as file:
+                version = data["Files"][filename]["version"]
+                vNum = int(version.lstrip("v"))
+                newV = vNum + 1
+                data["Files"][filename]["version"] = f"v{newV:03}"
+                json.dump(data,file,indent=4)
+                print(f"{filename} was updated to v{newV:3}")
 
 
 
