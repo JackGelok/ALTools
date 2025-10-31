@@ -159,9 +159,13 @@ class quickProjectUi(QtWidgets.QDialog):
             jsonDir = homeDir / project / f"{project}_Project.json"
         ######################################
     
-        self.logic.saveProjectJson(project, "file")
-        version = self.logic.loadProjectJson(jsonDir,"version")
-        self.logic.saveHipFile(project, file, f"{version:03}")
+        self.logic.initProjectJson(project)
+        self.logic.addFileToJson(project, file)
+        self.logic.incProjectVersion(project, file)
+
+        #self.logic.saveProjectJson(project, "file")
+        #version = self.logic.loadProjectJson(jsonDir,"version")
+        #self.logic.saveHipFile(project, file, f"{version:03}")
 
 
     def saveAsClicked(self):

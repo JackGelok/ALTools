@@ -111,7 +111,7 @@ class quickProjectLogic:
             # Write initial project structure to JSON file
             with open(jsonDir, "w") as file:
                 json.dump(structure, file, indent=4)
-            print(f"{project} was initilized at {homeDir}/{project}")
+            print(f"{project} was initilized at {homeDir}\{project}")
         else:
             print(f"initProjectJson was skiped due to entry {project} already existing")
             pass  # If project JSON already exists, do nothing
@@ -129,15 +129,15 @@ class quickProjectLogic:
             
         if filename not in data.get("Files",{}):
             data["Files"][filename] = {
-                "version": f"v{1:03}",
+                "version": f"v{0:03}",
                 "author": f"{author}",
                 "created": f"{self.now}",
-                "updated": f"{self.now}"
+                "modified": f"{self.now}"
             }
 
             with open(jsonDir,"w") as file:
                 json.dump(data, file, indent=4)
-            print(f"{filename} was initialized in {project} at {homeDir}/{project}")
+            print(f"{filename} was initialized in {project} at {homeDir}\{project}")
 
         else:
             print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
@@ -155,7 +155,7 @@ class quickProjectLogic:
             author = userdata["settings"]["author"]
             homeDir = Path(userdata["settings"]["homeDir"])
             jsonDir = homeDir / project / f"{project}_Project.json"
-        
+
         with open(jsonDir,"r") as file:
             data = json.load(file)
             
@@ -169,8 +169,9 @@ class quickProjectLogic:
                 vNum = int(version.lstrip("v"))
                 newV = vNum + 1
                 data["Files"][filename]["version"] = f"v{newV:03}"
+                data["Files"][filename]["modified"] = self.now
                 json.dump(data,file,indent=4)
-                print(f"{filename} was updated to v{newV:3}")
+                print(f"{filename} was updated to v{newV:03}")
 
 
 
