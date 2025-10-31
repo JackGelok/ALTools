@@ -12,6 +12,9 @@ class quickProjectLogic:
         self.jsonPath.parent.mkdir(parents=True, exist_ok=True) # make sure ALTools folder exists
         self.textPath = "E:/Projects"
         self.startup()
+        from datetime import datetime
+        nowUnformantted = datetime.now()
+        self.now = nowUnformantted.strftime("%d-%m-%Y %H:%M:%S")
 
     def startup(self):
         if self.checkJsonExists():
@@ -82,10 +85,6 @@ class quickProjectLogic:
         3. Creates a new project-specific JSON file if it doesn't exist
         4. Sets up initial project metadata including author and creation date
         """
-        # Get current timestamp for project creation date
-        from datetime import datetime
-        now = datetime.now()
-        nowFormatted = now.strftime("%d-%m-%Y %H:%M:%S")
 
         # Read user settings from main settings file
         with open(self.jsonPath, "r") as settFile:
@@ -101,21 +100,49 @@ class quickProjectLogic:
                 "ProjectData": {
                     "project": f"{project}",  # Project name
                     "author": f"{author}",    # Project author
-                    "created": f"{nowFormatted}"  # Creation timestamp
+                    "created": f"{self.now}"  # Creation timestamp
                     },
                 "Files": {  # Empty files section to be populated later
                 }
                 }
-            
+    
             # Create project directory if it doesn't exist
             jsonDir.parent.mkdir(parents=True, exist_ok=True)
             # Write initial project structure to JSON file
             with open(jsonDir, "w") as file:
                 json.dump(structure, file, indent=4)
         else:
+            print(f"initProjectJson was skiped due to entry {project} already existing")
             pass  # If project JSON already exists, do nothing
 
 
+    def addFileToJson(self, project, filename):
+        with open(self.jsonPath, "r") as settFile:
+            userdata = json.load(settFile)
+            author = userdata["settings"]["author"]
+            homeDir = Path(userdata["settings"]["homeDir"])
+            jsonDir = homeDir / project / f"{project}_Project.json"
+
+        with open(jsonDir,"r") as file:
+            data = json.load(file)
+            
+        if filename not in data.get("Files",{}):
+            data["Files"][filename] = {
+                "version": f"v{1:03}",
+                "author": f"{author}",
+                "created": f"{self.now}",
+                "updated": f"{self.now}"
+            }
+
+            with open(jsonDir,"w") as file:
+                json.dump(data, file, indent=4)
+
+        else:
+            print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
+            pass
+
+
+        def incProjectVersion(self, project, filename):
 
 
 
