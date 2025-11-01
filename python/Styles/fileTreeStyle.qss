@@ -1,80 +1,139 @@
 /* ############### scroll Area ############### */
-    QScrollArea {
-        background-color: #1e1e1e;
-        border: 1px solid #3c3c3c;
-        margin: 20px 2px 20px 2px;
+QScrollArea {
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    margin: 20px 2px 20px 2px;
+    border-radius: 8px;
+}
 
-        border-radius: 8px;
-    }
+/* === Vertical Scrollbar === */
+QScrollBar:vertical {
+    background-color: #242424;
+    width: 24px;
+    margin: 2px 2px 2px 2px;
+    border-radius: 9px;
+}
 
-    /* === Vertical Scrollbar === */
-    QScrollBar:vertical {
-        background-color: #242424;
-        width: 24px;
-        margin: 2px 2px 2px 2px;
-        border-radius: 9px;
-    }
+/* --- The Handle (draggable part) --- */
+QScrollBar::handle:vertical {
+    min-height: 25px;
+    margin: 2px;
+    border-radius: 7px;
+    border: 1px solid #444;
+    background: qlineargradient(
+        x1: 0, y1: 0,
+        x2: 0.2, y2: 1,
+        stop: 0.1 #C8006E,
+        stop: 0.5 #FA8B5A,
+        stop: 1 #E5C562
+    );
+}
 
-    /* --- The Handle (draggable part) --- */
-    QScrollBar::handle:vertical {
-        min-height: 25px;
-        margin: 2px;
-        border-radius: 7px;
-        border: 1px solid #444;
-        background: qlineargradient(
-            x1: 0, y1: 0,
-            x2: 0.2, y2: 1,
-            stop: 0.1 #C8006E,
-            stop: 0.5 #FA8B5A,
-            stop: 1 #E5C562
-        );
-    }
+QScrollBar::handle:vertical:hover {
+    background-color: #6a6a6a;
+}
 
-    QScrollBar::handle:vertical:hover {
-        background-color: #6a6a6a;
-    }
-
-    
-    QScrollBar::add-line:vertical {
+QScrollBar::add-line:vertical {
     background: none;
     border: 0px;
     height: 0px;
-    }
+}
 
-    QScrollBar::sub-line:vertical {
+QScrollBar::sub-line:vertical {
     background: none;
     border: 0px;
     height: 0px;
-    }
+}
 
-    /* === Horizontal Scrollbar === */
-    QScrollBar:horizontal {
-        background-color: #242424;
-        height: 12px;
-        margin: 4px;
-        border-radius: 6px;
-    }
+/* Horizontal scrollbar */
+QScrollBar:horizontal {
+    background-color: #242424;
+    height: 12px;
+    margin: 4px;
+    border-radius: 6px;
+}
 
-    QScrollBar::handle:horizontal {
-        background-color: #505050;
-        border-radius: 6px;
-        min-width: 25px;
-        margin: 2px;
-    }
+QScrollBar::handle:horizontal {
+    background-color: #505050;
+    border-radius: 6px;
+    min-width: 25px;
+    margin: 2px;
+}
 
-    QScrollBar::handle:horizontal:hover {
-        background-color: #6a6a6a;
-    }
+QScrollBar::handle:horizontal:hover {
+    background-color: #6a6a6a;
+}
 
-    QScrollBar::add-line:horizontal,
-    QScrollBar::sub-line:horizontal {
-        width: 0;
-        background: none;
-    }
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal {
+    width: 0;
+    background: none;
+}
 
-    QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical  
-    {  
-        border: none;  
-        background: none;  
-        color: none;  
-    }
+QScrollBar::up-arrow:vertical,
+QScrollBar::down-arrow:vertical {
+    border: none;
+    background: none;
+    color: transparent;
+}
+
+/* ============================================================ */
+/* Tree widget */
+/* ============================================================ */
+
+QTreeWidget {
+    background-color: #1e1e1e;
+    border: 1px solid #3c3c3c;
+    border-radius: 8px;
+}
+
+QTreeWidget::item {
+    height: 22px;
+    padding: 3px 6px;
+    margin: 2px 0px;
+    border: none; 
+}
+
+QTreeWidget::item:first {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+QTreeWidget::item:last {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+
+QTreeWidget::item:hover {
+    background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 #243636, stop:1 #266464);
+}
+
+QTreeWidget::item:selected {
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 #344e4e, stop:1 #348d8d);
+    color: #ffffff;
+}
+
+QTreeWidget::item:open {
+    background-color: #252525;
+}
+
+QHeaderView::section {
+    background-color: #252525;
+    color: #aaaaaa;
+    padding: 4px;
+    border: none;
+    font-weight: bold;
+    border-radius: 8px;
+    margin: 1px;
+}
+
+QHeaderView {
+    background-color: #252525;
+    alternate-background-color: #252525;
+    border-radius: 8px;
+}
+
+QTreeView::branch {
+    background: #1e1e1e;
+}

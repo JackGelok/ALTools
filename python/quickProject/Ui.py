@@ -116,7 +116,6 @@ class quickProjectUi(QtWidgets.QDialog):
         self.saveBar.addWidget(self.version)
         self.saveBar.addWidget(self.save)
         self.saveBar.addWidget(self.load)
-        #self.setLayout(self.saveBar)
 
 
     def fileTreeWidgets(self):
@@ -131,6 +130,7 @@ class quickProjectUi(QtWidgets.QDialog):
         self.files.setColumnWidth(0,230)
         self.files.setHeaderLabels(["Project","Version","Modified"])
         self.files.setStyleSheet(fileTreeStyle)
+
 
 
     def fileTreeLayout(self):
@@ -236,7 +236,6 @@ class quickProjectUi(QtWidgets.QDialog):
         self.settingsCog.clicked.connect(self.settingsDiag)
         self.files.itemClicked.connect(self.onTreeItemClicked)
         self.files.itemDoubleClicked.connect(self.loadFile)
-        
 
 
     def onTreeItemClicked(self, item, column):
@@ -264,15 +263,14 @@ class quickProjectUi(QtWidgets.QDialog):
             self.fileName.setText(fileName)
 
             # Optional: clear version if a file is clicked
-            self.version.setText("")
+            self.version.setText("N/A")
 
         # Project item
         else:
             projectName = item.text(0)
             self.projectName.setText(projectName)
             self.fileName.setText("")
-            self.version.setText("")
-
+            self.version.setText("N/A")
 
 
     def loadFile(self):
