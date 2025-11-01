@@ -3,6 +3,8 @@ import json
 from pathlib import Path
 import os
 from quickProject import settingsPannel
+from PySide6 import QtWidgets
+import platform
 
 
 
@@ -37,7 +39,7 @@ class quickProjectLogic:
 
                 with open(self.jsonPath, 'w') as file:  
                     json.dump(structure, file, indent=4)
-                    print(f"Created new JSON file at: {self.jsonPath}")
+                    # print(f"Created new JSON file at: {self.jsonPath}")
 
     def saveHipFile(self, project, file, version):
         # === get File Path === #
@@ -54,11 +56,11 @@ class quickProjectLogic:
 
         # === save file === #
         self.save = hou.hipFile.save(str(self.filePath),True)
-        print(f"Saved File At: {self.filePath}")
+    # print(f"Saved File At: {self.filePath}")
 
     def updateJsonSettings(self, setting, value):
         if value == "":
-            print("value was blank")
+            # print("value was blank")
             return
 
         else:
@@ -109,9 +111,9 @@ class quickProjectLogic:
             # Write initial project structure to JSON file
             with open(jsonDir, "w") as file:
                 json.dump(structure, file, indent=4)
-            print(f"{project} was initilized at {homeDir}\{project}")
+            # print(f"{project} was initilized at {homeDir}\{project}")
         else:
-            print(f"initProjectJson was skiped due to entry {project} already existing")
+            # print(f"initProjectJson was skiped due to entry {project} already existing")
             pass  # If project JSON already exists, do nothing
 
     def addFileToJson(self, project, filename):
@@ -134,10 +136,10 @@ class quickProjectLogic:
 
             with open(jsonDir,"w") as file:
                 json.dump(data, file, indent=4)
-            print(f"{filename} was initialized in {project} at {homeDir}\{project}")
+            # print(f"{filename} was initialized in {project} at {homeDir}\{project}")
 
         else:
-            print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
+            # print(f"addFileToJson was skiped due to entry {filename} already existing in {project}")
             pass
 
     def incProjectVersion(self, project, filename):
@@ -156,7 +158,7 @@ class quickProjectLogic:
             
 
         if filename not in data.get("Files",{}):
-            print(f"{filename}, was not found in {project}")
+            # print(f"{filename}, was not found in {project}")
             return
         else:
             with open(jsonDir,"w") as file:
@@ -166,13 +168,12 @@ class quickProjectLogic:
                 data["Files"][filename]["version"] = f"v{newV:03}"
                 data["Files"][filename]["modified"] = f"{self.now}"
                 json.dump(data,file,indent=4)
-                print(f"{filename} was updated to v{newV:03}")
+                # print(f"{filename} was updated to v{newV:03}")
 
     def loadSettingsJson(self, setting):
         with open(self.jsonPath, "r") as file:
             data = json.load(file)
-
-        print(data["settings"][str(setting)])
+        # print(data["settings"][str(setting)])
         return data["settings"][str(setting)]
 
 
@@ -222,6 +223,6 @@ class quickProjectLogic:
                 hou.ui.displayMessage(f"Key '{key}' not found while traversing {projectpath}", buttons=("Ok",), severity=hou.severityType.Warning)
                 return None
 
-        # Print the result for visibility and return it
-        print(f"got value {current}")
+    # Print the result for visibility and return it
+    # print(f"got value {current} from {projectpath}")
         return current
