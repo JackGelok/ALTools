@@ -1,5 +1,8 @@
 import hou
-from PySide6 import QtWidgets, QtCore, QtGui
+try:
+    from PySide2 import QtWidgets, QtCore, QtGui
+except Exception:
+    from PySide6 import QtWidgets, QtCore, QtGui
 from pathlib import Path
 from StyleLoader import style
 from .settingsPannel import settingsPannel
@@ -42,7 +45,6 @@ class quickProjectUi(QtWidgets.QDialog):
         self.populateFileTree()
         self.connector()
         self.show()
-        #self.qssPathCorrector("images")
 
 
 

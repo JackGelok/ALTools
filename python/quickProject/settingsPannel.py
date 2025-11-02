@@ -1,5 +1,8 @@
 import hou
-from PySide6 import QtWidgets, QtCore, QtGui
+try:
+    from PySide2 import QtWidgets, QtCore, QtGui
+except Exception:
+    from PySide6 import QtWidgets, QtCore, QtGui
 from StyleLoader import style
 
 
