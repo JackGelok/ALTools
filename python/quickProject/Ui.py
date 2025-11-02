@@ -229,7 +229,7 @@ class quickProjectUi(QtWidgets.QDialog):
 
                     if hipFilePath.exists():
                         modifiedDate = QtCore.QDateTime.fromSecsSinceEpoch(int(hipFilePath.stat().st_mtime))
-                        versionItem.setText(2, modifiedDate.toString("HH:mm:ss   dd/MM/yyyy"))
+                        versionItem.setText(2, modifiedDate.toString("HH:mm:ss dd/MM/yyyy"))
                     else:
                         versionItem.setText(2, "N/A")
 
