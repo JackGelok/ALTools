@@ -5,6 +5,8 @@ from StyleLoader import style
 from .settingsPannel import settingsPannel
 from .logic import quickProjectLogic
 import json
+import os
+
 
 
 
@@ -40,6 +42,7 @@ class quickProjectUi(QtWidgets.QDialog):
         self.populateFileTree()
         self.connector()
         self.show()
+        #self.qssPathCorrector("images")
 
 
 
@@ -122,6 +125,9 @@ class quickProjectUi(QtWidgets.QDialog):
 
         #style Sheet
         fileTreeStyle = style("fileTreeStyle.qss")
+        fileTreeStyle = self.qssPathCorrector("images", fileTreeStyle)
+        
+
 
         self.files = QtWidgets.QTreeWidget()
         self.files.setColumnCount(3)
@@ -223,7 +229,7 @@ class quickProjectUi(QtWidgets.QDialog):
 
                     if hipFilePath.exists():
                         modifiedDate = QtCore.QDateTime.fromSecsSinceEpoch(int(hipFilePath.stat().st_mtime))
-                        versionItem.setText(2, modifiedDate.toString("HH:mm:ss dd:MM:yyyy"))
+                        versionItem.setText(2, modifiedDate.toString("HH:mm:ss   dd/MM/yyyy"))
                     else:
                         versionItem.setText(2, "N/A")
 
@@ -344,3 +350,10 @@ class quickProjectUi(QtWidgets.QDialog):
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("author",self.authorUser))
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("homeFolder", self.filePathUser))
         settings.show()
+
+
+    def qssPathCorrector(self, key, stylesheet):
+        qssPath = Path(f"{hou.getenv('HOUDINI_USER_PREF_DIR')}/ALTools/python/{key}")
+        qssPathStr = qssPath.as_posix()
+        stylesheet = stylesheet.replace(f'{key}/', f'{qssPathStr}/')
+        return stylesheet 

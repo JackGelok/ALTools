@@ -5,7 +5,6 @@ QScrollArea {
     margin: 20px 2px 20px 2px;
     border-radius: 8px;
 }
-
 /* === Vertical Scrollbar === */
 QScrollBar:vertical {
     background-color: #242424;
@@ -13,7 +12,6 @@ QScrollBar:vertical {
     margin: 2px 2px 2px 2px;
     border-radius: 9px;
 }
-
 /* --- The Handle (draggable part) --- */
 QScrollBar::handle:vertical {
     min-height: 25px;
@@ -28,23 +26,19 @@ QScrollBar::handle:vertical {
         stop: 1 #E5C562
     );
 }
-
 QScrollBar::handle:vertical:hover {
     background-color: #6a6a6a;
 }
-
 QScrollBar::add-line:vertical {
     background: none;
     border: 0px;
     height: 0px;
 }
-
 QScrollBar::sub-line:vertical {
     background: none;
     border: 0px;
     height: 0px;
 }
-
 /* Horizontal scrollbar */
 QScrollBar:horizontal {
     background-color: #242424;
@@ -52,72 +46,60 @@ QScrollBar:horizontal {
     margin: 4px;
     border-radius: 6px;
 }
-
 QScrollBar::handle:horizontal {
     background-color: #505050;
     border-radius: 6px;
     min-width: 25px;
     margin: 2px;
 }
-
 QScrollBar::handle:horizontal:hover {
     background-color: #6a6a6a;
 }
-
 QScrollBar::add-line:horizontal,
 QScrollBar::sub-line:horizontal {
     width: 0;
     background: none;
 }
-
 QScrollBar::up-arrow:vertical,
 QScrollBar::down-arrow:vertical {
     border: none;
     background: none;
     color: transparent;
 }
-
 /* ============================================================ */
 /* Tree widget */
 /* ============================================================ */
-
 QTreeWidget {
     background-color: #1e1e1e;
     border: 1px solid #3c3c3c;
     border-radius: 8px;
+    padding: 3px;
+    indentation: 12px
 }
-
 QTreeWidget::item {
     height: 22px;
+    margin: 3px 0px;
     padding: 3px 6px;
-    margin: 2px 0px;
     border: none; 
 }
-
 QTreeWidget::item:first {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
-
 QTreeWidget::item:last {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
-
-
 QTreeWidget::item:hover {
     background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 #243636, stop:1 #266464);
 }
-
 QTreeWidget::item:selected {
     background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0.1 #344e4e, stop:1 #348d8d);
     color: #ffffff;
 }
-
 QTreeWidget::item:open {
     background-color: #252525;
 }
-
 QHeaderView::section {
     background-color: #252525;
     color: #aaaaaa;
@@ -127,13 +109,68 @@ QHeaderView::section {
     border-radius: 8px;
     margin: 1px;
 }
-
 QHeaderView {
     background-color: #252525;
     alternate-background-color: #252525;
     border-radius: 8px;
 }
 
+
+/* ============================================================ */
+/* Tree branch styling */
+/* ============================================================ */
+
 QTreeView::branch {
     background: #1e1e1e;
+    border-image: none;
+    padding: 0px;
+}
+
+/* Branch with children - closed state */
+QTreeView::branch:has-children:!has-siblings:closed,
+QTreeView::branch:closed:has-children:has-siblings {
+    image: url(images/ALT-Branch-Closed.svg);
+    padding: 0px;
+}
+
+/* Branch with children - open state */
+QTreeView::branch:open:has-children:!has-siblings,
+QTreeView::branch:open:has-children:has-siblings {
+    image: url(images/ALT-Branch-Open.svg);
+    padding: 0px;
+}
+
+/* Branch with children - closed state hover */
+QTreeView::branch:has-children:!has-siblings:closed:hover,
+QTreeView::branch:closed:has-children:has-siblings:hover {
+    image: url(images/ALT-Branch-Closed-Hover.svg);
+    padding: 0px;
+}
+
+/* Branch with children - open state hover */
+QTreeView::branch:open:has-children:!has-siblings:hover,
+QTreeView::branch:open:has-children:has-siblings:hover {
+    image: url(images/ALT-Branch-Open-Hover.svg);
+    padding: 0px;
+}
+
+/* Vertical line when item has siblings below */
+QTreeView::branch:has-siblings:!adjoins-item {
+    border-image: none;
+    image: url(images/ALT-Branch-Straight.svg);
+    padding: -0px -7px;
+}
+
+/* Horizontal + vertical line at branch point */
+QTreeView::branch:has-siblings:adjoins-item {
+    border-image: none;
+    image: url(images/ALT-Branch-More.svg);
+    padding: 0px -7px;
+}
+
+/* End of branch (last item) */
+QTreeView::branch:!has-children:!has-siblings:adjoins-item {
+    border-image: none;
+    image: url(images/ALT-Branch-End.svg);
+    padding: -0px -7px;
 }
