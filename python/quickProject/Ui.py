@@ -323,11 +323,12 @@ class quickProjectUi(QtWidgets.QDialog):
     def saveClicked(self):
         project = self.projectName.text()
         file = self.fileName.text()
-        jsonDir = self.homeDir / project / f"{project}_Project.json"
 
         self.logic.initProjectJson(project)
         self.logic.addFileToJson(project, file)
         self.logic.incProjectVersion(project, file)
+
+        jsonDir = self.homeDir / project / f"{project}_Project.json"
 
         V = self.logic.loadProjectJson(jsonDir,("Files",f"{file}","version"))
         self.version.setText(V)
@@ -350,7 +351,7 @@ class quickProjectUi(QtWidgets.QDialog):
         settings.authorChanged.connect(storeAuthor)
         settings.filePathChanged.connect(storeFilePath)
         settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("author",self.authorUser))
-        settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("homeFolder", self.filePathUser))
+        settings.saveButton.clicked.connect(lambda: self.logic.updateJsonSettings("homeDir", self.filePathUser))
         settings.show()
 
 

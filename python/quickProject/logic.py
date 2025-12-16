@@ -12,8 +12,8 @@ class quickProjectLogic:
     def __init__(self):
         self.jsonPath = Path(f"{hou.getenv('HOUDINI_USER_PREF_DIR')}/ALTools/Projects.json")
         self.jsonPath.parent.mkdir(parents=True, exist_ok=True) # make sure ALTools folder exists
-        self.textPath = "E:/Projects"
         self.startup()
+        self.projectDir()
         from datetime import datetime
         nowUnformantted = datetime.now()
         self.now = nowUnformantted.strftime("%d-%m-%Y %H:%M:%S")
@@ -26,6 +26,13 @@ class quickProjectLogic:
             settings.show()
         else:
             pass
+
+    def projectDir(self):
+        with open(self.jsonPath, "r") as file:
+            data = json.load(file)
+            Value = data["settings"]["homeDir"]
+        return Value
+            
 
     def checkJsonExists(self):
         if not os.path.exists(self.jsonPath):
@@ -43,7 +50,8 @@ class quickProjectLogic:
 
     def saveHipFile(self, project, file, version):
         # === get File Path === #
-        self.filePath = Path(f"{self.textPath}/{project}/{project}_{file}_{version}.hip")
+        self.filePath = Path(f"{self.projectDir()}/{project}/{project}_{file}_{version}.hip")
+        print(self.filePath)
         self.filePath.parent.mkdir(parents=True, exist_ok=True)
 
         # === check for inputs === #
@@ -55,7 +63,7 @@ class quickProjectLogic:
             return
 
         # === save file === #
-        self.save = hou.hipFile.save(str(self.filePath),True)
+        self.save = hou.hipFile.save(self.filePath,True)
     # print(f"Saved File At: {self.filePath}")
 
     def updateJsonSettings(self, setting, value):

@@ -1,0 +1,2 @@
+def sync(self):
+    pass
