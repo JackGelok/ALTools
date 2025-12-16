@@ -51,7 +51,6 @@ class quickProjectLogic:
     def saveHipFile(self, project, file, version):
         # === get File Path === #
         self.filePath = Path(f"{self.projectDir()}/{project}/{project}_{file}_{version}.hip")
-        print(self.filePath)
         self.filePath.parent.mkdir(parents=True, exist_ok=True)
 
         # === check for inputs === #
@@ -63,7 +62,7 @@ class quickProjectLogic:
             return
 
         # === save file === #
-        self.save = hou.hipFile.save(self.filePath,True)
+        self.save = hou.hipFile.save(str(self.filePath),True)
     # print(f"Saved File At: {self.filePath}")
 
     def updateJsonSettings(self, setting, value):
