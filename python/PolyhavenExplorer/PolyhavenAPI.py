@@ -3,7 +3,7 @@ import os
 
 BASE_URL = "https://api.polyhaven.com"
 HEADERS = {
-    "User-Agent": "PolyhevenExplorerHoudini/0.1 (jackgelok@gmail.com)"
+    "User-Agent": "PolyhevenExplorerHoudini/0.1 (jackmgelok@gmail.com)"
 }
 
 def list_asset_types():
