@@ -5,6 +5,7 @@ import os
 from quickProject import settingsPannel
 from PySide6 import QtWidgets
 import platform
+from datetime import datetime
 
 
 
@@ -14,7 +15,6 @@ class quickProjectLogic:
         self.jsonPath.parent.mkdir(parents=True, exist_ok=True) # make sure ALTools folder exists
         self.startup()
         self.projectDir()
-        from datetime import datetime
         nowUnformantted = datetime.now()
         self.now = nowUnformantted.strftime("%d-%m-%Y %H:%M:%S")
 

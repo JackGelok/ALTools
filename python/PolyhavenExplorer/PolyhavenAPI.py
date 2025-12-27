@@ -60,21 +60,16 @@ def download_file(file_url, save_path):
     print(f"Saved to: {save_path}")
 
 
-def list_categories(asset_type: str):
-    """
-    List categories for a given asset type.
-    
-    asset_type must be one of:
-    - 'hdris'
-    - 'textures'
-    - 'models'
-    """
+def list_categories(asset_type, in_categories=None):
     url = f"{BASE_URL}/categories/{asset_type}"
 
-    response = requests.get(url, headers=HEADERS)
-    response.raise_for_status()
+    params = {}
+    if in_categories:
+        params["in"] = ",".join(in_categories)
 
-    return response.json()
+    r = requests.get(url, headers=HEADERS, params=params)
+    r.raise_for_status()
+    return r.json()
 
 
 if __name__ == "__main__":

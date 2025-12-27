@@ -1,4 +1,5 @@
 import hou
+from . import PolyhavenAPI
 try:
     from PySide2 import QtWidgets, QtCore, QtGui
 except Exception:
@@ -18,15 +19,17 @@ class explorerUi(QtWidgets.QDialog):
 
 
     def menuBar(self):
-        
+
         #assets
         searchIcon = hou.ui.createQtIcon("BUTTONS_search")
+        catagories = PolyhavenAPI.list_asset_types()
+        print(catagories)
 
         #widgets
         catLabel = QtWidgets.QLabel("Catagories")
 
-        catagoriesMenu = QtWidgets.QComboBox()
-        catagoriesMenu.addItems(["test1","test2"])
+        self.catagoriesMenu = QtWidgets.QComboBox()
+        self.catagoriesMenu.addItems(catagories)
 
         searchbar = QtWidgets.QLineEdit()
         searchbar.setPlaceholderText("Search")
@@ -38,13 +41,18 @@ class explorerUi(QtWidgets.QDialog):
         self.menuBarLayout = QtWidgets.QHBoxLayout()
 
         self.menuBarLayout.addWidget(catLabel)
-        self.menuBarLayout.addWidget(catagoriesMenu)
+        self.menuBarLayout.addWidget(self.catagoriesMenu)
         self.menuBarLayout.addWidget(searchbar)
         self.menuBarLayout.addWidget(searchbutton)
 
 
 
     def catagoryMenu(self):
+        #assets
+
+        #widgets
+
+        #layout 
         pass
 
 

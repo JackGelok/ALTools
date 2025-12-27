@@ -9,6 +9,7 @@
     <script><![CDATA[import importlib
 
 from PolyhavenExplorer import ui
+from PolyhavenExplorer import PolyhavenAPI
 
 try:
     importlib.reload(ui)
