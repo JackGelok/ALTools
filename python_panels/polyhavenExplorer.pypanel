@@ -11,13 +11,15 @@
 from PolyhavenExplorer import ui
 from PolyhavenExplorer import PolyhavenAPI
 
+
+
 try:
     importlib.reload(ui)
 except Exception:
     print("could not reload ui module")
 
 def onCreateInterface():
-    return ui.explorerUi()
+    return ui.TestGridUI()
 ]]></script>
     <includeInToolbarMenu menu_position="208" create_separator="false"/>
     <help><![CDATA[]]></help>
