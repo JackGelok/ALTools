@@ -19,7 +19,7 @@ except Exception:
     print("could not reload ui module")
 
 def onCreateInterface():
-    return ui.TestGridUI()
+    return ui.explorerUi()
 ]]></script>
     <includeInToolbarMenu menu_position="208" create_separator="false"/>
     <help><![CDATA[]]></help>
