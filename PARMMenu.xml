@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menuDocument>
 	<menu>
-    <subMenu id="Webb">
-      <label>Webb</label>
-      <insertBefore />
-      <scriptItem id="Say Hello">
-        <label>Say Hello</label>
-        <scriptCode><![CDATA[
+		<subMenu id="Webb">
+			<label>Webb</label>
+			<insertBefore />
+			<scriptItem id="Say Hello">
+				<label>Say Hello</label>
+				<scriptCode><![CDATA[
 print("hello")
-      ]]></scriptCode>
-      </scriptItem>
-    </subMenu>
+				]]></scriptCode>
+			</scriptItem>
+		</subMenu>
+		
+		<scriptItem id="sync_Fields">
+			<label>Sync Fields</label>
+			<scriptCode><![CDATA[
+from syncFields import sync_Fields
+sync_Fields.sync(kwargs)
+			]]></scriptCode>
+			<scriptArgs/>
+			<context>
+				<expression><![CDATA[
+from syncFields import sync_Fields
+return sync_Fields.checkSyncable(kwargs)
+				]]></expression>
+			</context>
+		</scriptItem>
 	</menu>
 </menuDocument>
