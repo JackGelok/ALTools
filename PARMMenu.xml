@@ -14,6 +14,7 @@ print("hello")
 		
 		<scriptItem id="sync_Fields">
 			<label>Sync Fields</label>
+			<insertAfter>paste_vals</insertAfter>
 			<scriptCode><![CDATA[
 from syncFields import sync_Fields
 sync_Fields.sync(kwargs)
